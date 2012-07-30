@@ -1,0 +1,28 @@
+// Sample program to test the compass sensor
+
+#define DEGREES_90 78
+
+
+sub turn90right(int sensor, byte motors[]){
+     int orientation = SensorHTCompass(sensor);
+     int curOrientation;
+     OnFwdSync(motors, 40, 100);
+     do{
+         curOrientation = SensorHTCompass(sensor);
+     } while(curOrientation - orientation < DEGREES_90);
+     Off(motors);
+}
+
+task main (){
+
+     SetSensorLowspeed(IN_1);
+
+     byte motors[] = {OUT_B,OUT_C};
+     int i = SensorHTCompass(IN_1);
+     do{
+        if(ButtonPressed(BTNCENTER,true)) i = 0;
+        int o = SensorHTCompass(IN_1);
+        ClearLine(LCD_LINE4);
+        NumOut(40, LCD_LINE4, (o-i));
+     }while(true);
+}
