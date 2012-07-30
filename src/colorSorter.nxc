@@ -1,0 +1,86 @@
+/*
+  Lego color sorter
+  Attempt to convert from NXT-G to NXC
+*/
+
+#define COLOR_SENSOR SENSOR_3
+#define TOUCH_SENSOR1 SENSOR_2
+#define TOUCH_SENSOR2 SENSOR_1
+
+
+#define PRESSED 1
+#define NOT_PRESSED 0
+#define UNTIL_BUMPED(x)  until((x) == PRESSED);until((x) == NOT_PRESSED);
+
+enum color_t {
+  BLUE = INPUT_BLUECOLOR,
+  RED = INPUT_REDCOLOR,
+  YELLOW = INPUT_YELLOWCOLOR,
+  GREEN = INPUT_GREENCOLOR
+};
+
+
+sub initializeSensors(){
+    //Color Sensor
+    SetSensorColorFull(IN_3);
+    //Touch sensor 1
+    SetSensorTouch(IN_2);
+    //Touch sensor 2
+    SetSensorTouch(IN_1);
+}
+
+
+task main(){
+     initializeSensors();
+     
+     OnFwd(OUT_C,50);
+     until(TOUCH_SENSOR1 == PRESSED);
+     RotateMotor(OUT_C,50,55);
+     while(true){
+         color_t color  = COLOR_SENSOR;
+         
+         switch(color){
+                       case BLUE:
+                            //PlaySound wait for completion
+                            OnFwd(OUT_B,50);
+                            UNTIL_BUMPED(TOUCH_SENSOR2);
+                            RotateMotor(OUT_B,50,0.8*360);
+                            Wait(MS_300);
+                       break;
+                       
+                       case RED:
+                            //PlaySound
+                            RotateMotor(OUT_C,40,90);
+                            OnFwd(OUT_B,50);
+                            UNTIL_BUMPED(TOUCH_SENSOR2);
+                            RotateMotor(OUT_B,50,0.8*360);
+                            RotateMotor(OUT_C,40,270);
+                       break;
+                       
+                       case YELLOW:
+                            //PlaySound
+                            RotateMotor(OUT_C,40,180);
+                            OnFwd(OUT_B,50);
+                            UNTIL_BUMPED(TOUCH_SENSOR2);
+                            RotateMotor(OUT_B,50,0.8*360);
+                            RotateMotor(OUT_C,40,180);
+                       break;
+                            
+                       case GREEN:
+                            //PlaySound
+                            RotateMotor(OUT_C,40,270);
+                            OnFwd(OUT_B,50);
+                            UNTIL_BUMPED(TOUCH_SENSOR2);
+                            RotateMotor(OUT_B,50,0.8*360);
+                            RotateMotor(OUT_C,40,90);
+                       break;
+                       
+                       default:
+                           //Play Sound - try again
+                            OnFwd(OUT_B,50);
+                            UNTIL_BUMPED(TOUCH_SENSOR2);
+                            RotateMotor(OUT_B,50,0.8*360);
+
+         }
+     }
+}
