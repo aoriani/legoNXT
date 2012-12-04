@@ -1,0 +1,11 @@
+
+task main(){
+     ResetRotationCount(OUT_ABC);
+     
+     while(true){
+         int rotation = MotorRotationCount(OUT_A);
+         NumOut(0,LCD_LINE1,rotation);
+         Wait(MS_100);
+         ClearScreen();
+     }
+}

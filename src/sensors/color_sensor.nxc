@@ -1,0 +1,55 @@
+
+task main()
+{
+
+  SetSensorColorFull(S1);
+  Wait(50);
+
+  while(true) {
+    unsigned int raw[], normal[], scaled[];
+    int color;
+    string colorName;
+    ReadSensorColorEx(S1,color,raw,normal,scaled);
+    
+    switch(color){
+       case INPUT_BLACKCOLOR:
+            colorName = "black";
+       break;
+       
+       case INPUT_BLUECOLOR:
+            colorName = "blue";
+       break;
+       
+       case INPUT_GREENCOLOR:
+            colorName = "green";
+       break;
+
+       case INPUT_YELLOWCOLOR:
+            colorName = "yellow";
+       break;
+       
+       case INPUT_REDCOLOR:
+            colorName = "red";
+       break;
+
+       case INPUT_WHITECOLOR:
+            colorName = "white";
+       break;
+       
+       default:
+           colorName="dunno";
+    }
+    int result = TextOut(0, LCD_LINE1, colorName, DRAW_OPT_CLEAR_WHOLE_SCREEN);
+
+    TextOut(0,  LCD_LINE2, "R:     ");
+    NumOut(6*2, LCD_LINE2, scaled[INPUT_RED]);
+    TextOut(0,  LCD_LINE3, "G:     ");
+    NumOut(6*2, LCD_LINE3, scaled[INPUT_GREEN]);
+    TextOut(0,  LCD_LINE4, "B:     ");
+    NumOut(6*2, LCD_LINE4, scaled[INPUT_BLUE]);
+    TextOut(0,  LCD_LINE5, "-:     ");
+    NumOut(6*2, LCD_LINE5,result);
+
+    Wait(MS_100);
+  }
+}

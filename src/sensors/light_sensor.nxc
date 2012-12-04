@@ -1,0 +1,12 @@
+task main(){
+     SetSensorType(S1,SENSOR_TYPE_LIGHT_ACTIVE);
+     SetSensorMode(S1, SENSOR_MODE_RAW);
+     ResetSensor(S1);
+     
+     while(true){
+         int light = SENSOR_1;
+         NumOut(0,LCD_LINE2,light);
+         Wait(MS_100);
+         ClearScreen();
+     }
+}

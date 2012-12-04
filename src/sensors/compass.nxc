@@ -1,0 +1,11 @@
+
+task main(){
+     SetSensorLowspeed(S1);
+     
+     while(true){
+         int rotation = SensorHTCompass(S1);
+         NumOut(0,LCD_LINE1,rotation);
+         Wait(MS_100);
+         ClearScreen();
+     }
+}

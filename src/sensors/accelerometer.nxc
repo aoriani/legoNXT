@@ -1,0 +1,21 @@
+
+task main()
+{
+  int x,y,z;
+  int maxX=0,maxY=0,maxZ=0;
+
+  SetSensorLowspeed(S1);
+  Wait(50);
+
+  while(true) {
+    ReadSensorHTAccel(S1, x, y, z);
+    TextOut(0,  LCD_LINE1, "x:     ");
+    NumOut(6*2, LCD_LINE1, x);
+    TextOut(0,  LCD_LINE2, "y:     ");
+    NumOut(6*2, LCD_LINE2, y);
+    TextOut(0,  LCD_LINE3, "z:     ");
+    NumOut(6*2, LCD_LINE3, z);
+    Wait(MS_100);
+    ClearScreen();
+  }
+}
